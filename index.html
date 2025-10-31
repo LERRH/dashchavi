@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Proyecto Chavimochic</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --chavimochic-green-1: #76BC21;
+            --chavimochic-green-2: #45A041;
+            --chavimochic-green-3: #008F49;
+            --chavimochic-blue-1: #00B2E3;
+            --chavimochic-blue-2: #00758D;
+            --chavimochic-blue-3: #00B0B2;
+            --chavimochic-orange-1: #DA8824;
+            --chavimochic-orange-2: #F1D09F;
+            --chavimochic-orange-3: #FFB71B;
+            --chavimochic-orange-4: #E47E3D;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #45A041 0%, #008F49 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .progress-bar-green {
+            background-color: #45A041;
+        }
+        .progress-bar-blue {
+            background-color: #00B2E3;
+        }
+        .text-chavimochic-green {
+            color: #45A041;
+        }
+        .text-chavimochic-blue {
+            color: #00B2E3;
+        }
+        .text-chavimochic-orange {
+            color: #FFB71B;
+        }
+        .border-chavimochic-green {
+            border-color: #45A041;
+        }
+        .border-chavimochic-blue {
+            border-color: #00B2E3;
+        }
+        .border-chavimochic-orange {
+            border-color: #FFB71B;
+        }
+        .bg-chavimochic-green-light {
+            background-color: rgba(69, 160, 65, 0.1);
+        }
+        .bg-chavimochic-blue-light {
+            background-color: rgba(0, 178, 227, 0.1);
+        }
+        .hover-border-green:hover {
+            border-color: #45A041;
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function Dashboard() {
+            const [activeSection, setActiveSection] = useState('datos');
+
+            // Datos del proyecto (puedes actualizar estos valores)
+            const projectData = {
+                nombre: "Proyecto Chavimochic - Tercera Etapa",
+                ubicacion: "La Libertad, Perú",
+                presupuesto: "S/ 1,500 millones",
+                avanceFisico: 65,
+                avanceFinanciero: 58,
+                estado: "En Ejecución"
+            };
+
+            // Documentos del contrato
+            const documentosContrato = [
+                { 
+                    id: 1, 
+                    categoria: "Documentos Principales",
+                    documentos: [
+                        { nombre: "Condiciones Particulares", enlace: "https://drive.google.com/file/d/18e-g54YlpgAIJcNDMZ0P_FRx0Zjr5EHZ/view?usp=drive_link", tipo: "PDF" },
+                        { nombre: "Condiciones Generales", enlace: "https://drive.google.com/file/d/18ZZLR52ekmVAeVUfO4Sgu52v99EdUqpF/view?usp=drive_link", tipo: "PDF" },
+                        { nombre: "Apéndice 1", enlace: "https://drive.google.com/file/d/17n2LUz6sliEdtALgA7n5CN4Ee0pMmlQB/view?usp=drive_link", tipo: "PDF" },
+                        { nombre: "Apéndice 2", enlace: "https://drive.google.com/file/d/17pcom1CFufO5zkNrhUTweW_0GudIXows/view?usp=drive_link", tipo: "PDF" },
+                        { nombre: "Apéndice 3", enlace: "https://drive.google.com/drive/folders/174gxP_AkJqR33puijS7vswFTgyiIzIyJ?usp=drive_link", tipo: "PDF" },
+                        { nombre: "Apéndice 4", enlace: "https://drive.google.com/file/d/181xc-UCJQMIga4vIrxvAJ20EQJRn1QZu/view?usp=drive_link", tipo: "PDF" },
+                        { nombre: "Apéndice 5", enlace: "https://drive.google.com/file/d/183DhJFZYeWXfyFU9AdGUceNFprdBsBlI/view?usp=drive_link", tipo: "PDF" }
+                    ]
+                },
+                { 
+                    id: 2, 
+                    categoria: "Adenda 1",
+                    documentos: [
+                        { nombre: "Adenda N° 1", enlace: "https://drive.google.com/file/d/17ajxUeYJCWh6LIJ5QVEFpx3VEHE8Gwmr/view?usp=drive_link", tipo: "PDF", fecha: "31-08-2025" },
+                        { nombre: "Apéndice 1", enlace: "https://drive.google.com/file/d/1ENIhfqa7hAyzwUdUGNCNXwQrLZy5_IoM/view?usp=drive_link", tipo: "PDF", fecha: "31-08-2025" },
+                        { nombre: "Apéndice 3", enlace: "https://drive.google.com/file/d/1z6kyHCaEvEysZDPVA4-noW7TUCgYe19l/view?usp=drive_link", tipo: "PDF", fecha: "31-08-2025" },
+                        { nombre: "Apéndice 4", enlace: "https://drive.google.com/file/d/1dBZ3T4z9SYIcqTUyDNQ1B0deJ66YsmPr/view?usp=drive_link", tipo: "PDF", fecha: "31-08-2025" }
+                    ]
+                }
+            ];
+
+            // Planes de gestión (actualizados según documentos)
+            const planesGestion = [
+                { 
+                    id: 1, 
+                    nombre: "Plan de Gestión de Proyecto - Parte A", 
+                    codigo: "H373884-0000-100-050-0001",
+                    icon: "fa-project-diagram",
+                    enlace: "https://drive.google.com/file/d/1Qo-ank3FF34tr2bcnl65GqT_sgEHLBey/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 2, 
+                    nombre: "Plan de Transferencia del Conocimiento y Legado", 
+                    codigo: "H373884-0000-100-050-0002",
+                    icon: "fa-graduation-cap",
+                    enlace: "https://drive.google.com/file/d/1ptO5xUhtBe6kFad7H6bFDcExry6FaYvv/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 3, 
+                    nombre: "Procedimientos de Gestión de Interfaces", 
+                    codigo: "H373884-0000-100-120-0001",
+                    icon: "fa-exchange-alt",
+                    enlace: "https://drive.google.com/file/d/16Wounb_Zi-ht5qJ2PIta1aYv2BGz-sCR/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 4, 
+                    nombre: "Plan de Gestión de Recursos", 
+                    codigo: "H373884-0000-100-120-0002",
+                    icon: "fa-users-cog",
+                    enlace: "https://drive.google.com/file/d/1xodzXMbzRSCNUKlbIVkG21H8xEzz28D_/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 5, 
+                    nombre: "Gestión de la Seguridad y Salud - Parte B1", 
+                    codigo: "H373884-0000-110-050-0002",
+                    icon: "fa-hard-hat",
+                    enlace: "https://drive.google.com/file/d/1zyFI3naVKhrFfqrLbHvu4lrtJUr8Pyar/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 6, 
+                    nombre: "Plan de Gestión de Riesgo", 
+                    codigo: "H373884-0000-120-050-0002",
+                    icon: "fa-exclamation-triangle",
+                    enlace: "https://drive.google.com/file/d/1Eh3wq4L8VbJ0hkyphYq6ALlSOxol8a7E/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 7, 
+                    nombre: "Plan de Gestión de Calidad", 
+                    codigo: "H373884-0000-130-050-0001",
+                    icon: "fa-check-circle",
+                    enlace: "https://drive.google.com/file/d/1JovkiUcCM-8qGIFIMPu8frLkBI9c3pBu/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 8, 
+                    nombre: "Plan de Gestión Procura", 
+                    codigo: "H373884-0000-300-050-0001",
+                    icon: "fa-shopping-cart",
+                    enlace: "https://drive.google.com/file/d/1T0foXXjUE-rl8Q_8r5ce-NbDpJudfueS/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 9, 
+                    nombre: "Plan Revisión de la Gestión de Construcción Fase 2", 
+                    codigo: "H373884-0000-400-050-0001",
+                    icon: "fa-tools",
+                    enlace: "https://drive.google.com/file/d/1qfHl4Hv_7VURb0QsPiur3wf8qYTmHxSX/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 10, 
+                    nombre: "Plan de Gestión de Costos", 
+                    codigo: "H373884-0000-600-120-0001",
+                    icon: "fa-dollar-sign",
+                    enlace: "https://drive.google.com/file/d/1HA-fGpnXyRoab7nDTcY7al0djKgmlnlT/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 11, 
+                    nombre: "Plan de Gestión de Cronogramas", 
+                    codigo: "H373884-0000-600-120-0002",
+                    icon: "fa-calendar-alt",
+                    enlace: "https://drive.google.com/file/d/1ZwiPI0lsr8TFm29la4nlLb8e0d4yzZoY/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 12, 
+                    nombre: "Plan de Gestión de Cambios", 
+                    codigo: "H373884-0000-600-120-0003",
+                    icon: "fa-random",
+                    enlace: "https://drive.google.com/file/d/1IRDWYqOFDefhGy4SDn9pRRqSMWwEKyUI/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 13, 
+                    nombre: "Plan de Control y Monitoreo", 
+                    codigo: "H373884-0000-600-120-0004",
+                    icon: "fa-chart-line",
+                    enlace: "https://drive.google.com/file/d/1Z2SGkfZlRbqiqTNymyzy-eXweU_gCX_c/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 14, 
+                    nombre: "Plan de Estimaciones de Capex", 
+                    codigo: "H373884-0000-620-050-0001",
+                    icon: "fa-calculator",
+                    enlace: "https://drive.google.com/file/d/1TDnXo0SxsAm8u9FTCUXYk_alDQfELUxg/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 15, 
+                    nombre: "Plan de Gestión de Implementación BIM", 
+                    codigo: "H373884-0000-700-050-0001",
+                    icon: "fa-cube",
+                    enlace: "https://drive.google.com/file/d/1wO0pRC6bpMqojQkjgSz9UveImCN69mR_/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 16, 
+                    nombre: "Plan de Soluciones Digitales", 
+                    codigo: "H373884-0000-701-050-0001",
+                    icon: "fa-laptop-code",
+                    enlace: "https://drive.google.com/file/d/1IElK-hC54IGUfV0wG_c_Rj0rdbthC4fb/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 17, 
+                    nombre: "Plan de Ejecución de Funciones Parte B12 - Gestión de Documentos", 
+                    codigo: "H373884-0000-720-050-0001",
+                    icon: "fa-folder-open",
+                    enlace: "https://drive.google.com/file/d/1AwvDK0g17lG67NWxuVVksWmv-Iq01SWX/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 18, 
+                    nombre: "Plan de Gestión Ambiental Fases 1 & 2", 
+                    codigo: "H373884-0000-840-050-0003",
+                    icon: "fa-leaf",
+                    enlace: "https://drive.google.com/file/d/12O1XyPQ5va5xiLGUcNa65tmYVe6zdFRP/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 19, 
+                    nombre: "Plan de Comunicaciones", 
+                    codigo: "H373884-0000-842-050-0004",
+                    icon: "fa-comments",
+                    enlace: "https://drive.google.com/file/d/1acY81z8EPVpWgx_yxbqkEhh-69J5Wmq6/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 20, 
+                    nombre: "Plan de Gestión y Relacionamiento con Partes Interesadas Fases 1 & 2", 
+                    codigo: "H373884-0000-842-050-0005",
+                    icon: "fa-handshake",
+                    enlace: "https://drive.google.com/file/d/1ys5mkRu3OMmnhTUGI00Bw7A45dOWkqDb/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 20, 
+                    nombre: "Diagnostico organizacional", 
+                    codigo: "H373884-0000-100-066-0022",
+                    icon: "fa-sitemap",
+                    enlace: "https://drive.google.com/file/d/1ZlqSsv3W-9RVkROlpl_ZGpDvmqMffhCb/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 20, 
+                    nombre: "Marco de gobernanza", 
+                    codigo: "H373884-0000-100-050-0004",
+                    icon: "fa-balance-scale",
+                    enlace: "https://drive.google.com/file/d/1swvTTJhmx5Rga6RgZ4_uAtej_DYlGkM8/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 20, 
+                    nombre: "Evaluación de capacidades", 
+                    codigo: "H373884-0000-100-230-0001",
+                    icon: "fa-clipboard-check",
+                    enlace: "https://drive.google.com/file/d/104yWR36C62toGrOl5W4lC3DueqV9YTdV/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },
+                { 
+                    id: 20, 
+                    nombre: "Resultados evaluación de madurez", 
+                    codigo: "H373884-0000-100-230-0002",
+                    icon: "fa-chart-bar",
+                    enlace: "https://drive.google.com/file/d/1Q2YDR0cNEsdhucwIqW1tTfFbUnXLV4q1/view?usp=drive_link",
+                    fecha: "Actualizado: 2025"
+                },                
+            ];
+
+            // Entregables Fase 2 (aquí agregarás los enlaces de Drive)
+            const entregablesFase2 = [
+                { 
+                    id: 1, 
+                    categoria: "Estudios Técnicos",
+                    documentos: [
+                        { nombre: "Doc 1", enlace: "#", tipo: "PDF" },
+                        { nombre: "Doc 2", enlace: "#", tipo: "PDF" },
+                        { nombre: "Doc 3", enlace: "#", tipo: "PDF" }
+                    ]
+                }
+            ];
+
+            const DatosSection = () => (
+                <div className="space-y-6">
+                    <div className="bg-white rounded-lg shadow-md p-6">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                            <i className="fas fa-info-circle mr-3" style={{color: '#45A041'}}></i>
+                            Información General
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="p-4 bg-gray-50 rounded-lg">
+                                <p className="text-sm text-gray-600 mb-1">Nombre del Proyecto</p>
+                                <p className="text-lg font-semibold text-gray-800">{projectData.nombre}</p>
+                            </div>
+                            <div className="p-4 bg-gray-50 rounded-lg">
+                                <p className="text-sm text-gray-600 mb-1">Ubicación</p>
+                                <p className="text-lg font-semibold text-gray-800">{projectData.ubicacion}</p>
+                            </div>
+                            <div className="p-4 bg-gray-50 rounded-lg">
+                                <p className="text-sm text-gray-600 mb-1">Presupuesto</p>
+                                <p className="text-lg font-semibold text-gray-800">{projectData.presupuesto}</p>
+                            </div>
+                            <div className="p-4 bg-gray-50 rounded-lg">
+                                <p className="text-sm text-gray-600 mb-1">Estado</p>
+                                <p className="text-lg font-semibold text-green-600">
+                                    <i className="fas fa-circle text-xs mr-2"></i>
+                                    {projectData.estado}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="bg-white rounded-lg shadow-md p-6">
+                            <h3 className="text-xl font-bold text-gray-800 mb-4">Avance Físico</h3>
+                            <div className="relative pt-1">
+                                <div className="flex mb-2 items-center justify-between">
+                                    <div>
+                                        <span className="text-3xl font-bold" style={{color: '#45A041'}}>{projectData.avanceFisico}%</span>
+                                    </div>
+                                </div>
+                                <div className="overflow-hidden h-4 mb-4 text-xs flex rounded-full bg-gray-200">
+                                    <div style={{width: `${projectData.avanceFisico}%`, backgroundColor: '#45A041'}} 
+                                         className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-500"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="bg-white rounded-lg shadow-md p-6">
+                            <h3 className="text-xl font-bold text-gray-800 mb-4">Avance Financiero</h3>
+                            <div className="relative pt-1">
+                                <div className="flex mb-2 items-center justify-between">
+                                    <div>
+                                        <span className="text-3xl font-bold" style={{color: '#00B2E3'}}>{projectData.avanceFinanciero}%</span>
+                                    </div>
+                                </div>
+                                <div className="overflow-hidden h-4 mb-4 text-xs flex rounded-full bg-gray-200">
+                                    <div style={{width: `${projectData.avanceFinanciero}%`, backgroundColor: '#00B2E3'}} 
+                                         className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-500"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const PlanesSection = () => (
+                <div className="space-y-6">
+                    <div className="bg-white rounded-lg shadow-md p-6">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i className="fas fa-folder-open mr-3" style={{color: '#00B2E3'}}></i>
+                            Planes de Gestión
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            {planesGestion.map(plan => (
+                                <a 
+                                    key={plan.id}
+                                    href={plan.enlace}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block p-4 bg-gradient-to-br from-green-50 to-blue-50 rounded-lg border-2 border-transparent card-hover"
+                                    style={{'--tw-gradient-from': 'rgba(69, 160, 65, 0.1)', '--tw-gradient-to': 'rgba(0, 178, 227, 0.1)'}}
+                                    onMouseEnter={(e) => e.currentTarget.style.borderColor = '#45A041'}
+                                    onMouseLeave={(e) => e.currentTarget.style.borderColor = 'transparent'}
+                                >
+                                    <div className="flex items-start justify-between mb-3">
+                                        <i className={`fas ${plan.icon} text-2xl`} style={{color: '#00B2E3'}}></i>
+                                        <i className="fas fa-external-link-alt text-gray-400 text-sm"></i>
+                                    </div>
+                                    <h3 className="text-sm font-bold text-gray-800 mb-2 line-clamp-2">{plan.nombre}</h3>
+                                    <p className="text-xs text-gray-500 mb-1">{plan.codigo}</p>
+                                    <p className="text-xs text-gray-600">{plan.fecha}</p>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+
+            const EntregablesSection = () => (
+                <div className="space-y-6">
+                    <div className="bg-white rounded-lg shadow-md p-6">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i className="fas fa-file-alt mr-3" style={{color: '#FFB71B'}}></i>
+                            Entregables - Fase 2
+                        </h2>
+                        {entregablesFase2.map(categoria => (
+                            <div key={categoria.id} className="mb-8 last:mb-0">
+                                <h3 className="text-xl font-bold text-gray-700 mb-4 pb-2 border-b-2" style={{borderColor: '#00B0B2'}}>
+                                    {categoria.categoria}
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                    {categoria.documentos.map((doc, idx) => (
+                                        <a 
+                                            key={idx}
+                                            href={doc.enlace}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 card-hover"
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.backgroundColor = 'rgba(0, 178, 227, 0.05)';
+                                                e.currentTarget.style.borderColor = '#00B2E3';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.backgroundColor = '';
+                                                e.currentTarget.style.borderColor = '#e5e7eb';
+                                            }}
+                                        >
+                                            <div className="flex items-center space-x-3 flex-1">
+                                                <i className="fas fa-file-pdf text-2xl text-red-500"></i>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-sm font-semibold text-gray-800 truncate">{doc.nombre}</p>
+                                                    <p className="text-xs text-gray-500">{doc.tipo}</p>
+                                                </div>
+                                            </div>
+                                            <i className="fas fa-download text-gray-400 ml-2"></i>
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            const ContratoSection = () => (
+                <div className="space-y-6">
+                    <div className="bg-white rounded-lg shadow-md p-6">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <i className="fas fa-file-contract mr-3" style={{color: '#DA8824'}}></i>
+                            Documentos Contractuales
+                        </h2>
+                        {documentosContrato.map(categoria => (
+                            <div key={categoria.id} className="mb-8 last:mb-0">
+                                <h3 className="text-xl font-bold text-gray-700 mb-4 pb-2 border-b-2" style={{borderColor: '#FFB71B'}}>
+                                    {categoria.categoria}
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                    {categoria.documentos.map((doc, idx) => (
+                                        <a 
+                                            key={idx}
+                                            href={doc.enlace}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 card-hover"
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.backgroundColor = 'rgba(218, 136, 36, 0.05)';
+                                                e.currentTarget.style.borderColor = '#DA8824';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.backgroundColor = '';
+                                                e.currentTarget.style.borderColor = '#e5e7eb';
+                                            }}
+                                        >
+                                            <div className="flex items-center space-x-3 flex-1">
+                                                <i className="fas fa-file-contract text-2xl" style={{color: '#DA8824'}}></i>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-sm font-semibold text-gray-800 truncate">{doc.nombre}</p>
+                                                    <p className="text-xs text-gray-500">{doc.tipo}</p>
+                                                    {doc.fecha && <p className="text-xs text-gray-400 mt-1">{doc.fecha}</p>}
+                                                </div>
+                                            </div>
+                                            <i className="fas fa-download text-gray-400 ml-2"></i>
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="min-h-screen bg-gray-50">
+                    {/* Header */}
+                    <header className="gradient-bg text-white shadow-lg">
+                        <div className="container mx-auto px-4 py-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h1 className="text-3xl font-bold mb-1">Proyecto Chavimochic</h1>
+                                    <p className="text-green-100">Sistema de Gestión Documental</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-sm text-green-100">Última actualización</p>
+                                    <p className="text-lg font-semibold">31 de Octubre, 2025</p>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Navigation */}
+                    <nav className="bg-white shadow-md sticky top-0 z-10">
+                        <div className="container mx-auto px-4">
+                            <div className="flex space-x-1">
+                                <button
+                                    onClick={() => setActiveSection('datos')}
+                                    className={`px-6 py-4 font-semibold transition-colors ${
+                                        activeSection === 'datos'
+                                            ? 'text-chavimochic-green border-b-4 border-chavimochic-green'
+                                            : 'text-gray-600 hover:text-chavimochic-green'
+                                    }`}
+                                    style={activeSection === 'datos' ? {color: '#45A041', borderBottomColor: '#45A041'} : {}}
+                                >
+                                    <i className="fas fa-chart-line mr-2"></i>
+                                    Datos Principales
+                                </button>
+                                <button
+                                    onClick={() => setActiveSection('contrato')}
+                                    className={`px-6 py-4 font-semibold transition-colors ${
+                                        activeSection === 'contrato'
+                                            ? 'text-chavimochic-green border-b-4 border-chavimochic-green'
+                                            : 'text-gray-600 hover:text-chavimochic-green'
+                                    }`}
+                                    style={activeSection === 'contrato' ? {color: '#45A041', borderBottomColor: '#45A041'} : {}}
+                                >
+                                    <i className="fas fa-file-contract mr-2"></i>
+                                    Contrato
+                                </button>
+                                <button
+                                    onClick={() => setActiveSection('planes')}
+                                    className={`px-6 py-4 font-semibold transition-colors ${
+                                        activeSection === 'planes'
+                                            ? 'text-chavimochic-green border-b-4 border-chavimochic-green'
+                                            : 'text-gray-600 hover:text-chavimochic-green'
+                                    }`}
+                                    style={activeSection === 'planes' ? {color: '#45A041', borderBottomColor: '#45A041'} : {}}
+                                >
+                                    <i className="fas fa-folder-open mr-2"></i>
+                                    Planes de Gestión
+                                </button>
+                                <button
+                                    onClick={() => setActiveSection('entregables')}
+                                    className={`px-6 py-4 font-semibold transition-colors ${
+                                        activeSection === 'entregables'
+                                            ? 'text-chavimochic-green border-b-4 border-chavimochic-green'
+                                            : 'text-gray-600 hover:text-chavimochic-green'
+                                    }`}
+                                    style={activeSection === 'entregables' ? {color: '#45A041', borderBottomColor: '#45A041'} : {}}
+                                >
+                                    <i className="fas fa-file-alt mr-2"></i>
+                                    Entregables Fase 2
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    {/* Main Content */}
+                    <main className="container mx-auto px-4 py-8">
+                        {activeSection === 'datos' && <DatosSection />}
+                        {activeSection === 'planes' && <PlanesSection />}
+                        {activeSection === 'contrato' && <ContratoSection />}
+                        {activeSection === 'entregables' && <EntregablesSection />}
+                    </main>
+
+                    {/* Footer */}
+                    <footer className="bg-gray-800 text-white mt-12">
+                        <div className="container mx-auto px-4 py-6">
+                            <div className="text-center">
+                                <p className="text-sm text-gray-400">
+                                    © 2025 Proyecto Chavimochic - Tercera Etapa. Todos los derechos reservados.
+                                </p>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<Dashboard />, document.getElementById('root'));
+    </script>
+</body>
+</html>
